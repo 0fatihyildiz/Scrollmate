@@ -6,6 +6,7 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install"
   },
@@ -14,7 +15,8 @@
     "eslint-config-custom": "*",
     "husky": "^8.0.1",
     "prettier": "latest",
-    "turbo": "latest"
+    "turbo": "latest",
+    "unocss": "^0.52.7"
   },
   "engines": {
     "npm": ">=7.0.0",
@@ -22,6 +24,7 @@
   },
   "packageManager": "pnpm@7.32.3",
   "dependencies": {
+    "@unocss/reset": "^0.52.7",
     "scrollmate": "workspace:^"
   }
 }
