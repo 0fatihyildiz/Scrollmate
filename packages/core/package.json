@@ -11,7 +11,8 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
-    }
+    },
+    "./styles": "./dist/style.css"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",

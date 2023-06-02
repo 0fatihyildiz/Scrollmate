@@ -1,10 +1,10 @@
 import '@unocss/reset/tailwind.css'
 import 'virtual:uno.css'
 import './style.css'
-import createMatter from 'scrollmate'
+import ScrollMatter from '../../packages/core/src/index'
 
 const element = document.getElementById('app')
 
-const matter = createMatter(element)
+const matter = new ScrollMatter(element)
 
 matter.scrollArea()

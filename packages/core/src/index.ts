@@ -1,45 +1,58 @@
-type Element = HTMLElement | null
+import type { Element } from './types'
 
-// interface Options {
-
-// }
-
-export default function createMatter(el: Element) {
-  const scrollAreaStyle: Partial<CSSStyleDeclaration> = {
+export default class ScrollMatter {
+  private el: Element
+  private scrollAreaStyle: Partial<CSSStyleDeclaration> = {
     overflow: 'hidden',
   }
 
-  const getEl = (): Element => el
+  constructor(el: Element) {
+    this.el = el ?? el
+  }
 
-  const withNullCheck = (fn: any) => {
-    return function (this: any, ...args: any[]) {
-      const targetEl = getEl()
+  private withNullCheck(fn: Function): (...args: any[]) => void {
+    return (...args: any[]) => {
+      const targetEl = this.el
       if (!targetEl) {
         console.warn('Element is null.')
         return
       }
-      Reflect.apply(fn, this, [targetEl, ...args])
+      fn.apply(this, [targetEl, ...args])
     }
   }
 
-  function assignStyles(
+  private assignStyles(
     target: CSSStyleDeclaration | undefined,
     styles: Partial<CSSStyleDeclaration>,
   ) {
     if (!target)
       return
-
     Object.assign(target, styles)
   }
 
-  const scrollArea = withNullCheck((): void => {
-    const element: any = getEl()
+  public scrollArea(): void {
+    const element: Element = this.el!
     const content = element.innerHTML
-    assignStyles(element.style, scrollAreaStyle)
-    element.innerHTML = `<div class="scrollmater-content">${content}</div>`
-  })
+    this.assignStyles(element.style, this.scrollAreaStyle)
+    element.innerHTML = `<div class="scrollmatter-content">${content}</div>`
+    element.addEventListener('wheel', (ev: WheelEvent) => {
+      ev.preventDefault()
+      if (element.scrollTop === 0 && ev.deltaY < 0)
+        return
+      if (
+        element.scrollTop + element.clientHeight === element.scrollHeight
+        && ev.deltaY > 0
+      )
+        return
 
-  return {
-    scrollArea,
+      // console.log(
+      //   element.scrollTop + ev.deltaY > element.scrollHeight - element.clientHeight,
+      // )
+      // console.log(element.scrollTop + ev.deltaY < 0)
+
+      element.scrollLeft += ev.deltaY
+      element.scrollTop += ev.deltaY
+      return false
+    })
   }
 }
