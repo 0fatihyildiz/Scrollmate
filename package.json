@@ -11,7 +11,9 @@
     "prepare": "husky install"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^0.39.4",
     "@types/node": "^18.14.2",
+    "eslint": "^8.41.0",
     "eslint-config-custom": "*",
     "husky": "^8.0.1",
     "prettier": "latest",
